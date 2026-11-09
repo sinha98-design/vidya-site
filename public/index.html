@@ -112,6 +112,29 @@
     h1 .name { color: var(--red); display: block; }
     .intro p { margin: 0 0 14px; max-width: 40rem; }
     .intro strong { color: var(--red); font-weight: 700; }
+    /* small icon list */
+    .skills {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .skills li { display: flex; align-items: center; gap: 7px; }
+    .skills svg {
+      width: 20px;
+      height: 20px;
+      flex: none;
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .skills .next { color: var(--red); }
     .palette { display: flex; gap: 8px; list-style: none; padding: 0; margin: 20px 0 0; }
     .palette li { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--line); }
     .notes {
@@ -284,46 +307,19 @@
         <p>A hand-led <strong>Designer &amp; illustration</strong>, moving into product design. I see colour as a conversation, and I <strong>draw it instead of saying it</strong>.</p>
         <p>I design by really looking: at light, at colour, at how a body carries clothing. Then I make it real by hand. Nobody showed me; I watched, I practised, I painted. <strong>Everything here is made by me, not by AI.</strong></p>
         <p>Now I'm bringing that eye to product design and UX: noticing the small details that change how something feels.</p>
-        <ul class="palette" aria-label="My palette, taken from my illustration: deep red, blush, gold, rose and denim">
-          <li style="background: var(--red)"></li>
-          <li style="background: var(--blush)"></li>
-          <li style="background: var(--gold)"></li>
-          <li style="background: var(--rose)"></li>
-          <li style="background: var(--denim)"></li>
+        <ul class="skills" aria-label="What I do">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg>Colour</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Observation</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg>Illustration</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg>Fashion</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg>Photography</li>
+          <li class="next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg>Moving into product design &amp; UX</li>
         </ul>
-
-        <div class="notes">
-          <div>
-            <h2>What I bring</h2>
-            <ul>
-              <li>Colour</li>
-              <li>Observation</li>
-              <li>Hand &amp; digital illustration</li>
-              <li>Storytelling</li>
-            </ul>
-          </div>
-          <div>
-            <h2>What I make</h2>
-            <ul>
-              <li>Fashion illustration</li>
-              <li>Colour studies</li>
-              <li>Light &amp; shadow studies</li>
-              <li>Photography</li>
-            </ul>
-          </div>
-          <div>
-            <h2>Moving into</h2>
-            <ul>
-              <li>Product design</li>
-              <li>UX</li>
-            </ul>
-          </div>
-        </div>
 
         <div class="polaroids" aria-label="Snapshots from my sketchbook">
           <figure class="polaroid">
-            <span class="shot" role="img" aria-label="A flowing plum gown illustration from Mid—Dissolve." style="background-image: url(images/work/02-mid-dissolve.jpg); background-position: 24% 84%;"></span>
-            <figcaption>Mid—Dissolve</figcaption>
+            <span class="shot" role="img" aria-label="Mid - Dissolve: a coloured-pencil drawing of swirling blues and greens, like moving water." style="background-image: url(images/work/victory.jpg); background-size: 206% auto; background-position: 50% 73%;"></span>
+            <figcaption>Mid - Dissolve</figcaption>
           </figure>
           <figure class="polaroid">
             <span class="shot" role="img" aria-label="A painted garba chaniya choli with a peacock skirt." style="background-image: url(images/work/04-illustration.jpg); background-position: 96% 93%;"></span>
