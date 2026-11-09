@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vidya Sinha — Designer &amp; illustration</title>
+  <meta name="description" content="Vidya Sinha is a hand-led Designer &amp; illustration, moving into product design and UX. Colour, close observation and work made by hand, not by AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Theme taken from my illustration and portfolio:
+       colours  - top and boots (deep red), jeans (denim charcoal), skin (blush),
+                  earrings and sunglass frames (gold), lenses (rose)
+       type     - Syne (my portfolio's wide headings and text),
+                  Anton (the "Vidya's PORTFOLIO 2026" header),
+                  DM Serif Display (the tall "SKETCH BOOK" labels)
+       background - the grid-paper sheet stays as it was */
+    :root {
+      --ink: #23262f;
+      --muted: #5c5f6a;
+      --paper: #f6f2ec;
+      --grid: rgba(28, 20, 24, 0.06);
+      --red: #8b0000;
+      --denim: #2a2e38;
+      --blush: #dfa996;
+      --gold: #c9a24a;
+      --rose: #e7a3b4;
+      --line: #e3d9d3;
+      /* old names kept so nothing breaks */
+      --plum: var(--denim);
+      --pink: var(--rose);
+      --hand: "DM Serif Display", Georgia, serif;
+      --display: "Syne", system-ui, sans-serif;
+      --header: "Anton", Impact, sans-serif;
+      --serif: "DM Serif Display", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: #ffffff;
+    }
+    img { max-width: 100%; }
+    a { color: var(--red); }
+
+    /* ---------- About me: grid-paper sheet, cut-out me, notes, polaroids ---------- */
+    .about-sheet {
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      overflow: hidden;
+    }
+    .about-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 48px 24px 56px;
+      display: grid;
+      grid-template-columns: minmax(220px, 300px) 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .me {
+      position: relative;
+      text-align: center;
+    }
+    .me img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 2;
+      object-fit: cover;
+      object-position: center;
+      /* red "sticker" outline around the cut-out */
+      filter:
+        drop-shadow(4px 0 0 var(--red)) drop-shadow(-4px 0 0 var(--red))
+        drop-shadow(0 4px 0 var(--red)) drop-shadow(0 -4px 0 var(--red));
+    }
+    .tag {
+      display: inline-block;
+      font-family: var(--header);
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border: 2px solid var(--red);
+      color: var(--red);
+      background: #fff;
+      transform: rotate(-4deg);
+      margin-top: -12px;
+      position: relative;
+    }
+    .running {
+      font-family: var(--header);
+      font-size: 18px;
+      margin: 0 0 18px;
+      color: var(--ink);
+    }
+    h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      margin: 0 0 20px;
+    }
+    h1 .name { color: var(--red); display: block; }
+    .intro p { margin: 0 0 14px; max-width: 40rem; }
+    .intro strong { color: var(--red); font-weight: 700; }
+    /* small icon list */
+    .skills {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .skills li { display: flex; align-items: center; gap: 7px; }
+    .skills svg {
+      width: 20px;
+      height: 20px;
+      flex: none;
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .skills .next { color: var(--red); }
+    .palette { display: flex; gap: 8px; list-style: none; padding: 0; margin: 20px 0 0; }
+    .palette li { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--line); }
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 24px;
+      margin: 28px 0 8px;
+    }
+    .notes h2 {
+      font-family: var(--header);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 18px;
+      margin: 0 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--red);
+      display: inline-block;
+    }
+    .notes ul { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+    .notes li { padding-left: 16px; position: relative; margin-bottom: 2px; }
+    .notes li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.55em;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+    .notes li:nth-child(2)::before { background: var(--blush); }
+    .notes li:nth-child(3)::before { background: var(--gold); }
+    .notes li:nth-child(4)::before { background: var(--denim); }
+
+    .polaroids {
+      display: flex;
+      gap: 20px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .polaroid {
+      margin: 0;
+      background: #fff;
+      padding: 10px 10px 6px;
+      box-shadow: 0 6px 18px rgba(28, 20, 24, 0.14);
+      width: 170px;
+    }
+    .polaroid:nth-child(1) { transform: rotate(-4deg); }
+    .polaroid:nth-child(2) { transform: rotate(2deg) translateY(10px); }
+    .polaroid:nth-child(3) { transform: rotate(-1.5deg); }
+    /* each snapshot zooms into one drawing on a portfolio page */
+    .polaroid .shot {
+      display: block;
+      width: 150px;
+      height: 170px;
+      background-repeat: no-repeat;
+      background-size: 320% auto;
+    }
+    .polaroid figcaption {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 17px;
+      text-align: center;
+      line-height: 1.3;
+      padding-top: 4px;
+    }
+
+    /* ---------- Moving strip ---------- */
+    .strip {
+      background: var(--red);
+      color: #fff;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 12px 0;
+      font-family: var(--header);
+      font-weight: 400;
+      font-size: 22px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .strip-track {
+      display: inline-block;
+      animation: slide 30s linear infinite;
+    }
+    .strip span { margin: 0 18px; }
+    .strip .dot { color: var(--gold); }
+    @keyframes slide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .strip-track { animation: none; }
+    }
+
+    /* ---------- Work ---------- */
+    main { max-width: 72rem; margin: 0 auto; padding: 0 24px 64px; }
+    section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 8px;
+    }
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 56px;
+      height: 4px;
+      background: var(--red);
+      margin-top: 10px;
+    }
+    .section-lede { margin: 0 0 28px; color: var(--muted); max-width: 40rem; }
+    .work {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+    .work figure { margin: 0; }
+    .work img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+    .work figcaption { padding-top: 10px; }
+    .work h3 { margin: 0 0 2px; font-family: var(--display); font-weight: 800; font-size: 20px; }
+    .work p { margin: 0; color: var(--muted); font-size: 15px; }
+    .work .big { grid-column: 1 / -1; }
+
+    blockquote {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4.4vw, 3rem);
+      line-height: 1.15;
+      max-width: 40rem;
+      color: var(--ink);
+    }
+    blockquote::before { content: "“"; color: var(--red); }
+    blockquote::after { content: "”"; color: var(--red); }
+    footer { padding-top: 32px; color: var(--muted); font-size: 15px; }
+
+    @media (max-width: 760px) {
+      .about-inner { grid-template-columns: 1fr; gap: 24px; padding: 32px 16px 40px; }
+      .me { max-width: 200px; margin: 0 auto; }
+      .polaroids { justify-content: center; }
+      .polaroid { width: 140px; }
+      .polaroid .shot { width: 120px; height: 140px; }
+      main { padding: 0 16px 48px; }
+      .work { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Album: turn the portfolio pages like a book ---------- */
+    .book.is-book .book-stage {
+      position: relative;
+      max-width: 920px;
+      margin: 0 auto;
+      perspective: 2400px;
+    }
+    /* the pages underneath, peeking out on the right like a real album */
+    .book.is-book .book-stage::before {
+      content: "";
+      position: absolute;
+      inset: 6px -10px -6px 4px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px 10px 10px 4px;
+      box-shadow: 4px 4px 0 -1px #fff, 4px 4px 0 0 var(--line), 0 18px 40px rgba(35, 38, 47, 0.18);
+    }
+    .book.is-book .work {
+      display: block;
+      position: relative;
+      aspect-ratio: 4 / 3;
+    }
+    .book.is-book .work figure {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      background: #fff;
+      border-radius: 3px 8px 8px 3px;
+      overflow: hidden;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: transform 1.1s cubic-bezier(0.45, 0.05, 0.35, 1), box-shadow 1.1s;
+      cursor: pointer;
+    }
+    /* spine shadow along the left edge */
+    .book.is-book .work figure::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 36px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* light sweeping across a page as it turns */
+    .book.is-book .work figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.22));
+      opacity: 0;
+      transition: opacity 0.9s;
+      pointer-events: none;
+    }
+    .book.is-book .work figure.turned { transform: rotateY(-180deg); }
+    .book.is-book .work figure.turned::after { opacity: 1; }
+    .book.is-book .work img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: contain;
+      border: 0;
+      border-radius: 0;
+    }
+    .book.is-book .work figcaption { display: none; }
+
+    .book-bar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      max-width: 920px;
+      margin: 28px auto 0;
+    }
+    .book-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      background: #fff;
+      color: var(--red);
+      font-size: 22px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .book-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
+    .book-btn:disabled { opacity: 0.3; cursor: default; }
+    .book-caption { text-align: center; }
+    .book-count {
+      font-family: var(--header);
+      letter-spacing: 0.08em;
+      color: var(--red);
+      font-size: 15px;
+    }
+    .book-title {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+      margin: 2px 0;
+    }
+    .book-line { margin: 0 auto; color: var(--muted); font-size: 15px; max-width: 34rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .book.is-book .work figure { transition: none; }
+    }
+    @media (max-width: 760px) {
+      .book.is-book .book-stage::before { inset: 4px -6px -4px 2px; }
+      .book-bar { gap: 10px; }
+      .book-btn { width: 44px; height: 44px; font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="about-sheet" aria-labelledby="hello">
+    <div class="about-inner">
+      <div class="me">
+        <img src="images/vidya-illustration.png" width="1080" height="1080" alt="A hand-drawn illustration of Vidya: long black hair, sunglasses on her head, a red off-shoulder top, dark jeans and red ankle boots.">
+        <span class="tag">drawn by me</span>
+      </div>
+
+      <div class="intro">
+        <p class="running">Vidya's PORTFOLIO 2026</p>
+        <h1 id="hello">Hi! I'm <span class="name">Vidya Sinha</span></h1>
+        <p>A hand-led <strong>Designer &amp; illustration</strong>, moving into product design. I see colour as a conversation, and I <strong>draw it instead of saying it</strong>.</p>
+        <p>I design by really looking: at light, at colour, at how a body carries clothing. Then I make it real by hand. Nobody showed me; I watched, I practised, I painted. <strong>Everything here is made by me, not by AI.</strong></p>
+        <p>Now I'm bringing that eye to product design and UX: noticing the small details that change how something feels.</p>
+        <ul class="skills" aria-label="What I do">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg>Colour</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Observation</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg>Illustration</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg>Fashion</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg>Photography</li>
+          <li class="next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg>Moving into product design &amp; UX</li>
+        </ul>
+
+        <div class="polaroids" aria-label="Snapshots from my sketchbook">
+          <figure class="polaroid">
+            <span class="shot" role="img" aria-label="Mid - Dissolve: a coloured-pencil drawing of swirling blues and greens, like moving water." style="background-image: url(images/work/victory.jpg); background-size: 206% auto; background-position: 50% 73%;"></span>
+            <figcaption>Mid - Dissolve</figcaption>
+          </figure>
+          <figure class="polaroid">
+            <span class="shot" role="img" aria-label="A painted garba chaniya choli with a peacock skirt." style="background-image: url(images/work/04-illustration.jpg); background-position: 96% 93%;"></span>
+            <figcaption>Garba chaniya choli</figcaption>
+          </figure>
+          <figure class="polaroid">
+            <span class="shot" role="img" aria-label="A coloured-pencil table drawn from memory, with a long shadow." style="background-image: url(images/work/05-light-as-teacher.jpg); background-position: 69% 88%;"></span>
+            <figcaption>Drawn from memory</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
+      <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
+      <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
+      <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <main>
+    <section aria-labelledby="work">
+      <h2 class="section-title" id="work">From my portfolio</h2>
+      <p class="section-lede">Pages from my 2026 portfolio. Every drawing, painting and photograph here is my own.</p>
+      <div class="book" id="book" role="region" aria-roledescription="album" aria-label="My portfolio, page by page">
+       <div class="book-stage">
+      <div class="work">
+        <figure class="big">
+          <img src="images/work/02-mid-dissolve.jpg" width="1024" height="768" alt="Portfolio page: Mid—Dissolve. Two gown illustrations in blush and plum beside an inspiration board of colour bleeding into water.">
+          <figcaption><h3>Mid—Dissolve</h3><p>Two gowns inspired by a drop of colour touching still water: one holding its shape, one already letting go.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="images/work/03-colour-blocking.jpg" width="1024" height="768" alt="Portfolio page: Colour Blocking. Bright dress illustrations in yellow, orange, red and pink, with colour swatches and a painting.">
+          <figcaption><h3>Colour Blocking</h3><p>Every colour changes depending on who it stands next to.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="images/work/04-illustration.jpg" width="1024" height="768" alt="Portfolio page: Digital and hand illustration. Digital portraits, a fashion figure, colour circles and a painted garba chaniya choli.">
+          <figcaption><h3>Digital / Hand illustration</h3><p>Nobody showed me. I watched, I practised, I painted.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="images/work/05-light-as-teacher.jpg" width="1024" height="768" alt="Portfolio page: Light as Teacher. Pencil shadow studies and a coloured-pencil table drawn from memory.">
+          <figcaption><h3>Light as Teacher</h3><p>Seen once, held in memory, and built from scratch through rendering.</p></figcaption>
+        </figure>
+        <figure>
+          <img src="images/work/06-photography.jpg" width="1024" height="768" alt="Portfolio page: Nature Painted First. Photographs of a seashore at dusk, pink blossoms, hibiscus, bougainvillea and a sunset.">
+          <figcaption><h3>Nature Painted First</h3><p>Somewhere between the petals and the horizon, I found my palette.</p></figcaption>
+        </figure>
+      </div>
+       </div>
+       <div class="book-bar" hidden>
+         <button type="button" class="book-btn" data-dir="-1" aria-label="Previous page">&larr;</button>
+         <div class="book-caption" aria-live="polite">
+           <span class="book-count"></span>
+           <h3 class="book-title"></h3>
+           <p class="book-line"></p>
+         </div>
+         <button type="button" class="book-btn" data-dir="1" aria-label="Next page">&rarr;</button>
+       </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="values">
+      <h2 class="section-title" id="values">What I value</h2>
+      <blockquote>Design made with care, by hand, from really looking — not from a template.</blockquote>
+    </section>
+
+    <footer>
+      <p>The code for this site is on <a href="https://github.com/sinha98-design/vidya-site">GitHub</a>.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Album: turn portfolio pages like a book. Without JavaScript the pages
+    // simply show one after another, with their captions.
+    (function () {
+      var book = document.getElementById('book');
+      if (!book) return;
+      var pages = Array.prototype.slice.call(book.querySelectorAll('.work figure'));
+      var bar = book.querySelector('.book-bar');
+      var prev = book.querySelector('[data-dir="-1"]');
+      var next = book.querySelector('[data-dir="1"]');
+      var count = book.querySelector('.book-count');
+      var title = book.querySelector('.book-title');
+      var line = book.querySelector('.book-line');
+      var at = 0;
+
+      book.classList.add('is-book');
+      bar.hidden = false;
+      book.tabIndex = 0;
+
+      function show() {
+        pages.forEach(function (page, i) {
+          page.classList.toggle('turned', i < at);
+          page.style.zIndex = pages.length - i;
+          page.setAttribute('aria-hidden', i === at ? 'false' : 'true');
+        });
+        var cap = pages[at].querySelector('figcaption');
+        count.textContent = 'Page ' + (at + 1) + ' of ' + pages.length;
+        title.textContent = cap.querySelector('h3').textContent;
+        line.textContent = cap.querySelector('p').textContent;
+        prev.disabled = at === 0;
+        next.disabled = at === pages.length - 1;
+      }
+      function turn(dir) {
+        var to = at + dir;
+        if (to < 0 || to >= pages.length) return;
+        at = to;
+        show();
+      }
+
+      prev.addEventListener('click', function () { turn(-1); });
+      next.addEventListener('click', function () { turn(1); });
+      book.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { turn(1); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { turn(-1); e.preventDefault(); }
+      });
+      // click the right half of a page to go forward, the left half to go back
+      pages.forEach(function (page) {
+        page.addEventListener('click', function (e) {
+          var r = page.getBoundingClientRect();
+          turn(e.clientX - r.left > r.width / 2 ? 1 : -1);
+        });
+      });
+      // swipe on phones
+      var startX = null;
+      book.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+      book.addEventListener('touchend', function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) turn(dx < 0 ? 1 : -1);
+        startX = null;
+      });
+
+      show();
+    })();
+  </script>
+</body>
+</html>

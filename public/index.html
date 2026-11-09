@@ -291,6 +291,118 @@
       main { padding: 0 16px 48px; }
       .work { grid-template-columns: 1fr; }
     }
+
+    /* ---------- Album: turn the portfolio pages like a book ---------- */
+    .book.is-book .book-stage {
+      position: relative;
+      max-width: 920px;
+      margin: 0 auto;
+      perspective: 2400px;
+    }
+    /* the pages underneath, peeking out on the right like a real album */
+    .book.is-book .book-stage::before {
+      content: "";
+      position: absolute;
+      inset: 6px -10px -6px 4px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px 10px 10px 4px;
+      box-shadow: 4px 4px 0 -1px #fff, 4px 4px 0 0 var(--line), 0 18px 40px rgba(35, 38, 47, 0.18);
+    }
+    .book.is-book .work {
+      display: block;
+      position: relative;
+      aspect-ratio: 4 / 3;
+    }
+    .book.is-book .work figure {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      background: #fff;
+      border-radius: 3px 8px 8px 3px;
+      overflow: hidden;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      transition: transform 1.1s cubic-bezier(0.45, 0.05, 0.35, 1), box-shadow 1.1s;
+      cursor: pointer;
+    }
+    /* spine shadow along the left edge */
+    .book.is-book .work figure::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 36px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* light sweeping across a page as it turns */
+    .book.is-book .work figure::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.22));
+      opacity: 0;
+      transition: opacity 0.9s;
+      pointer-events: none;
+    }
+    .book.is-book .work figure.turned { transform: rotateY(-180deg); }
+    .book.is-book .work figure.turned::after { opacity: 1; }
+    .book.is-book .work img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: contain;
+      border: 0;
+      border-radius: 0;
+    }
+    .book.is-book .work figcaption { display: none; }
+
+    .book-bar {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      max-width: 920px;
+      margin: 28px auto 0;
+    }
+    .book-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--red);
+      background: #fff;
+      color: var(--red);
+      font-size: 22px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .book-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
+    .book-btn:disabled { opacity: 0.3; cursor: default; }
+    .book-caption { text-align: center; }
+    .book-count {
+      font-family: var(--header);
+      letter-spacing: 0.08em;
+      color: var(--red);
+      font-size: 15px;
+    }
+    .book-title {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+      margin: 2px 0;
+    }
+    .book-line { margin: 0 auto; color: var(--muted); font-size: 15px; max-width: 34rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .book.is-book .work figure { transition: none; }
+    }
+    @media (max-width: 760px) {
+      .book.is-book .book-stage::before { inset: 4px -6px -4px 2px; }
+      .book-bar { gap: 10px; }
+      .book-btn { width: 44px; height: 44px; font-size: 18px; }
+    }
   </style>
 </head>
 <body>
@@ -347,27 +459,40 @@
     <section aria-labelledby="work">
       <h2 class="section-title" id="work">From my portfolio</h2>
       <p class="section-lede">Pages from my 2026 portfolio. Every drawing, painting and photograph here is my own.</p>
+      <div class="book" id="book" role="region" aria-roledescription="album" aria-label="My portfolio, page by page">
+       <div class="book-stage">
       <div class="work">
         <figure class="big">
-          <img src="images/work/02-mid-dissolve.jpg" width="1024" height="768" loading="lazy" alt="Portfolio page: Mid—Dissolve. Two gown illustrations in blush and plum beside an inspiration board of colour bleeding into water.">
+          <img src="images/work/02-mid-dissolve.jpg" width="1024" height="768" alt="Portfolio page: Mid—Dissolve. Two gown illustrations in blush and plum beside an inspiration board of colour bleeding into water.">
           <figcaption><h3>Mid—Dissolve</h3><p>Two gowns inspired by a drop of colour touching still water: one holding its shape, one already letting go.</p></figcaption>
         </figure>
         <figure>
-          <img src="images/work/03-colour-blocking.jpg" width="1024" height="768" loading="lazy" alt="Portfolio page: Colour Blocking. Bright dress illustrations in yellow, orange, red and pink, with colour swatches and a painting.">
+          <img src="images/work/03-colour-blocking.jpg" width="1024" height="768" alt="Portfolio page: Colour Blocking. Bright dress illustrations in yellow, orange, red and pink, with colour swatches and a painting.">
           <figcaption><h3>Colour Blocking</h3><p>Every colour changes depending on who it stands next to.</p></figcaption>
         </figure>
         <figure>
-          <img src="images/work/04-illustration.jpg" width="1024" height="768" loading="lazy" alt="Portfolio page: Digital and hand illustration. Digital portraits, a fashion figure, colour circles and a painted garba chaniya choli.">
+          <img src="images/work/04-illustration.jpg" width="1024" height="768" alt="Portfolio page: Digital and hand illustration. Digital portraits, a fashion figure, colour circles and a painted garba chaniya choli.">
           <figcaption><h3>Digital / Hand illustration</h3><p>Nobody showed me. I watched, I practised, I painted.</p></figcaption>
         </figure>
         <figure>
-          <img src="images/work/05-light-as-teacher.jpg" width="1024" height="768" loading="lazy" alt="Portfolio page: Light as Teacher. Pencil shadow studies and a coloured-pencil table drawn from memory.">
+          <img src="images/work/05-light-as-teacher.jpg" width="1024" height="768" alt="Portfolio page: Light as Teacher. Pencil shadow studies and a coloured-pencil table drawn from memory.">
           <figcaption><h3>Light as Teacher</h3><p>Seen once, held in memory, and built from scratch through rendering.</p></figcaption>
         </figure>
         <figure>
-          <img src="images/work/06-photography.jpg" width="1024" height="768" loading="lazy" alt="Portfolio page: Nature Painted First. Photographs of a seashore at dusk, pink blossoms, hibiscus, bougainvillea and a sunset.">
+          <img src="images/work/06-photography.jpg" width="1024" height="768" alt="Portfolio page: Nature Painted First. Photographs of a seashore at dusk, pink blossoms, hibiscus, bougainvillea and a sunset.">
           <figcaption><h3>Nature Painted First</h3><p>Somewhere between the petals and the horizon, I found my palette.</p></figcaption>
         </figure>
+      </div>
+       </div>
+       <div class="book-bar" hidden>
+         <button type="button" class="book-btn" data-dir="-1" aria-label="Previous page">&larr;</button>
+         <div class="book-caption" aria-live="polite">
+           <span class="book-count"></span>
+           <h3 class="book-title"></h3>
+           <p class="book-line"></p>
+         </div>
+         <button type="button" class="book-btn" data-dir="1" aria-label="Next page">&rarr;</button>
+       </div>
       </div>
     </section>
 
@@ -380,5 +505,71 @@
       <p>The code for this site is on <a href="https://github.com/sinha98-design/vidya-site">GitHub</a>.</p>
     </footer>
   </main>
+
+  <script>
+    // Album: turn portfolio pages like a book. Without JavaScript the pages
+    // simply show one after another, with their captions.
+    (function () {
+      var book = document.getElementById('book');
+      if (!book) return;
+      var pages = Array.prototype.slice.call(book.querySelectorAll('.work figure'));
+      var bar = book.querySelector('.book-bar');
+      var prev = book.querySelector('[data-dir="-1"]');
+      var next = book.querySelector('[data-dir="1"]');
+      var count = book.querySelector('.book-count');
+      var title = book.querySelector('.book-title');
+      var line = book.querySelector('.book-line');
+      var at = 0;
+
+      book.classList.add('is-book');
+      bar.hidden = false;
+      book.tabIndex = 0;
+
+      function show() {
+        pages.forEach(function (page, i) {
+          page.classList.toggle('turned', i < at);
+          page.style.zIndex = pages.length - i;
+          page.setAttribute('aria-hidden', i === at ? 'false' : 'true');
+        });
+        var cap = pages[at].querySelector('figcaption');
+        count.textContent = 'Page ' + (at + 1) + ' of ' + pages.length;
+        title.textContent = cap.querySelector('h3').textContent;
+        line.textContent = cap.querySelector('p').textContent;
+        prev.disabled = at === 0;
+        next.disabled = at === pages.length - 1;
+      }
+      function turn(dir) {
+        var to = at + dir;
+        if (to < 0 || to >= pages.length) return;
+        at = to;
+        show();
+      }
+
+      prev.addEventListener('click', function () { turn(-1); });
+      next.addEventListener('click', function () { turn(1); });
+      book.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { turn(1); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { turn(-1); e.preventDefault(); }
+      });
+      // click the right half of a page to go forward, the left half to go back
+      pages.forEach(function (page) {
+        page.addEventListener('click', function (e) {
+          var r = page.getBoundingClientRect();
+          turn(e.clientX - r.left > r.width / 2 ? 1 : -1);
+        });
+      });
+      // swipe on phones
+      var startX = null;
+      book.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+      book.addEventListener('touchend', function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) turn(dx < 0 ? 1 : -1);
+        startX = null;
+      });
+
+      show();
+    })();
+  </script>
 </body>
 </html>
