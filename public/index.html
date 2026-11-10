@@ -508,10 +508,14 @@
       .anim .me .skills .label { max-width: 0; }
       .anim .me .skills li.open .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
       .me { --fig-w: 150px; width: 100%; max-width: 340px; margin: 0 auto; }
-      .me .skills { font-size: 13px; }
+      .me .skills { font-size: 12px; }
       .me .skills li > svg { width: 28px; height: 28px; padding: 5px; }
-      /* on a phone there is no room for the branches: show icon and name only */
-      .me .skills .branch { display: none; }
+      /* on a phone: the same animation, just smaller. Short branches and
+         small polaroids (no caption) so everything fits beside the figure */
+      .me .skills li:nth-child(odd), .me .skills li:nth-child(even) { --len: 16px; }
+      .me .skills .pola { padding: 3px 3px 2px; }
+      .me .skills .pola .shot { width: 30px; height: 32px; }
+      .me .skills .pola figcaption { display: none; }
       .polaroids { justify-content: center; }
       .polaroid { width: 140px; }
       .polaroid .shot { width: 120px; height: 140px; }
