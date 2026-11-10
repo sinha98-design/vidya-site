@@ -123,24 +123,18 @@
       border: 1.5px solid var(--red);
       border-radius: 50%;
       background: #fff;
-      transition: background 0.25s, stroke 0.25s;
     }
-    .me .skills li:hover > svg,
-    .me .skills li:focus > svg { background: var(--red); stroke: #fff; }
-    /* the name hides inside the icon and slides out on hover */
+    /* Each skill: icon, then its name, then a branch out to a polaroid.
+       Branches alternate short and long so the polaroids spread out. */
+    .me .skills li { cursor: default; }
+    .me .skills li:nth-child(odd) { --len: 40px; }
+    .me .skills li:nth-child(even) { --len: 175px; }
     .me .skills .label {
       display: inline-block;
-      max-width: 0;
-      opacity: 0;
+      max-width: 280px;
       overflow: hidden;
       white-space: nowrap;
-      transition: max-width 0.4s ease, opacity 0.3s ease;
     }
-    .me .skills li:hover { z-index: 10; }
-    .me .skills li:focus { z-index: 10; }
-    .me .skills li:hover .label,
-    .me .skills li:focus .label { max-width: 280px; opacity: 1; }
-    /* then a branch grows out to a polaroid of my work */
     .me .skills .branch {
       position: absolute;
       left: 100%;
@@ -151,42 +145,48 @@
       pointer-events: none;
     }
     .me .skills .twig {
-      width: 0;
+      width: var(--len);
       height: 1.5px;
       background: var(--red);
-      transition: width 0.3s ease 0.25s;
     }
-    .me .skills li:hover .twig,
-    .me .skills li:focus .twig { width: 34px; }
     .me .skills .pola {
       margin: 0;
       background: #fff;
-      padding: 6px 6px 3px;
+      padding: 5px 5px 3px;
       box-shadow: 0 6px 16px rgba(28, 20, 24, 0.18);
-      opacity: 0;
-      transform: scale(0.5) rotate(-6deg);
+      transform: rotate(-3deg);
       transform-origin: left center;
-      transition: opacity 0.25s ease 0.45s, transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1) 0.45s;
     }
-    .me .skills li:hover .pola,
-    .me .skills li:focus .pola { opacity: 1; transform: scale(1) rotate(-3deg); }
+    .me .skills li:nth-child(even) .pola { transform: rotate(3deg); }
     .me .skills .pola .shot {
       display: block;
-      width: 100px;
-      height: 114px;
-      background-repeat: no-repeat;
-      background-size: 320% auto;
+      width: 64px;
+      height: 72px;
+      /* empty for now: a blank polaroid waiting for its picture */
+      background: #f1ece6;
     }
     .me .skills .pola figcaption {
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 700;
       text-align: center;
       white-space: nowrap;
-      padding-top: 3px;
+      padding-top: 2px;
+      max-width: 64px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .me .skills .label, .me .skills .twig, .me .skills .pola { transition: none; }
-    }
+    /* Scroll animation (JavaScript on, motion allowed): when the figure
+       scrolls into view, the skills open slowly one by one, top to bottom:
+       icon pops in, name slides out, branch grows, polaroid lands. */
+    .anim .me .skills li > svg { opacity: 0; transform: scale(0.4); transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.3, 1.5, 0.5, 1); }
+    .anim .me .skills .label { max-width: 0; opacity: 0; transition: max-width 0.6s ease 0.45s, opacity 0.5s ease 0.45s; }
+    .anim .me .skills .twig { width: 0; transition: width 0.6s ease 1s; }
+    .anim .me .skills .pola { opacity: 0; transform: scale(0.4) rotate(-8deg); transition: opacity 0.4s ease 1.55s, transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) 1.55s; }
+    .anim .me .skills li.open > svg { opacity: 1; transform: none; }
+    .anim .me .skills li.open .label { max-width: 280px; opacity: 1; }
+    .anim .me .skills li.open .twig { width: var(--len); }
+    .anim .me .skills li.open .pola { opacity: 1; transform: rotate(-3deg); }
+    .anim .me .skills li.open:nth-child(even) .pola { transform: rotate(3deg); }
     /* typed introduction */
     section.typed { padding-top: 16px; padding-bottom: 0; }
     .typed-inner {
@@ -500,12 +500,8 @@
       .me { --fig-w: 150px; width: 100%; max-width: 340px; margin: 0 auto; }
       .me .skills { font-size: 13px; }
       .me .skills li > svg { width: 28px; height: 28px; padding: 5px; }
-      /* on a phone the branch drops down below the icon instead */
-      .me .skills .branch { left: 0; top: 100%; transform: none; flex-direction: column; align-items: flex-start; padding-left: 14px; }
-      .me .skills .twig { width: 1.5px; height: 0; transition: height 0.3s ease 0.25s; }
-      .me .skills li:hover .twig, .me .skills li:focus .twig { width: 1.5px; height: 18px; }
-      .me .skills .pola { transform-origin: top left; }
-      .me .skills .pola .shot { width: 80px; height: 92px; }
+      /* on a phone there is no room for the branches: show icon and name only */
+      .me .skills .branch { display: none; }
       .polaroids { justify-content: center; }
       .polaroid { width: 140px; }
       .polaroid .shot { width: 120px; height: 140px; }
@@ -666,12 +662,12 @@
         <ul class="skills" aria-label="What I do">
           <!-- only the icon shows; hover (or tap) and the name slides out,
                then a branch grows out to a polaroid of my work -->
-          <li tabindex="0" style="--x: .61; --y: .11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span class="label">Observation</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot" role="img" aria-label="A coloured-pencil table drawn from memory, with a long shadow." style="background-image: url(images/work/05-light-as-teacher.jpg); background-position: 69% 88%;"></span><figcaption>Drawn from memory</figcaption></figure></span></li>
-          <li tabindex="0" style="--x: .72; --y: .24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg><span class="label">Colour</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot" role="img" aria-label="Mid - Dissolve: a coloured-pencil drawing of swirling blues and greens, like moving water." style="background-image: url(images/work/victory.jpg); background-size: 206% auto; background-position: 50% 73%;"></span><figcaption>Mid - Dissolve</figcaption></figure></span></li>
-          <li tabindex="0" style="--x: .70; --y: .38"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg><span class="label">Illustration</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot" role="img" aria-label="A painted garba chaniya choli with a peacock skirt." style="background-image: url(images/work/04-illustration.jpg); background-position: 96% 93%;"></span><figcaption>Garba chaniya choli</figcaption></figure></span></li>
-          <li tabindex="0" style="--x: .68; --y: .52"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg><span class="label">Fashion</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot" role="img" aria-label="Colour-blocked dress illustrations in yellow, orange, red and pink." style="background-image: url(images/work/03-colour-blocking.jpg); background-size: 470% auto; background-position: 44% 34%;"></span><figcaption>Colour Blocking</figcaption></figure></span></li>
-          <li tabindex="0" style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot" role="img" aria-label="A photograph of pink bougainvillea flowers." style="background-image: url(images/work/06-photography.jpg); background-position: 100% 8%;"></span><figcaption>Nature painted first</figcaption></figure></span></li>
-          <li tabindex="0" class="next" style="--x: .68; --y: .84"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg><span class="label">Moving into product design &amp; UX</span></li>
+          <li style="--x: .61; --y: .11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span class="label">Observation</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Drawn from memory</figcaption></figure></span></li>
+          <li style="--x: .72; --y: .24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg><span class="label">Colour</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Mid - Dissolve</figcaption></figure></span></li>
+          <li style="--x: .70; --y: .38"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg><span class="label">Illustration</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Garba chaniya choli</figcaption></figure></span></li>
+          <li style="--x: .68; --y: .52"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg><span class="label">Fashion</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Colour Blocking</figcaption></figure></span></li>
+          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Nature painted first</figcaption></figure></span></li>
+          <li class="next" style="--x: .68; --y: .84"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg><span class="label">Moving into product design &amp; UX</span></li>
         </ul>
         <span class="tag">drawn by me</span>
       </div>
@@ -834,6 +830,27 @@
       }
       window.addEventListener('scroll', check, { passive: true });
       check();
+    })();
+  </script>
+
+  <script>
+    // Skills along my figure: when it scrolls into view, open them slowly,
+    // one after another from head to boots.
+    (function () {
+      var items = Array.prototype.slice.call(document.querySelectorAll('.me .skills li'));
+      if (!items.length) return;
+      if (!document.documentElement.classList.contains('anim') || !('IntersectionObserver' in window)) {
+        items.forEach(function (li) { li.classList.add('open'); });
+        return;
+      }
+      var seen = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        seen.disconnect();
+        items.forEach(function (li, i) {
+          setTimeout(function () { li.classList.add('open'); }, 300 + i * 900);
+        });
+      }, { threshold: 0.35 });
+      seen.observe(document.querySelector('.me'));
     })();
   </script>
 
