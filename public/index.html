@@ -360,14 +360,16 @@
     .book.is-book .work figcaption { display: none; }
 
     .book-bar {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 16px;
       max-width: 920px;
-      margin: 28px auto 0;
+      margin: 24px auto 0;
     }
+    /* arrows sit on the left and right edges of the page, halfway down */
     .book-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      box-shadow: 0 4px 12px rgba(35, 38, 47, 0.18);
       width: 52px;
       height: 52px;
       border-radius: 50%;
@@ -379,7 +381,9 @@
       transition: background 0.2s, color 0.2s;
     }
     .book-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
-    .book-btn:disabled { opacity: 0.3; cursor: default; }
+    .book-btn:disabled { opacity: 0; pointer-events: none; }
+    .book-prev { left: -22px; }
+    .book-next { right: -22px; }
     .book-caption { text-align: center; }
     .book-count {
       font-family: var(--header);
@@ -400,8 +404,9 @@
     }
     @media (max-width: 760px) {
       .book.is-book .book-stage::before { inset: 4px -6px -4px 2px; }
-      .book-bar { gap: 10px; }
-      .book-btn { width: 44px; height: 44px; font-size: 18px; }
+      .book-btn { width: 40px; height: 40px; font-size: 17px; }
+      .book-prev { left: 6px; }
+      .book-next { right: 6px; }
     }
   </style>
 </head>
@@ -483,15 +488,15 @@
           <figcaption><h3>Nature Painted First</h3><p>Somewhere between the petals and the horizon, I found my palette.</p></figcaption>
         </figure>
       </div>
+         <button type="button" class="book-btn book-prev" data-dir="-1" aria-label="Previous page" hidden>&larr;</button>
+         <button type="button" class="book-btn book-next" data-dir="1" aria-label="Next page" hidden>&rarr;</button>
        </div>
        <div class="book-bar" hidden>
-         <button type="button" class="book-btn" data-dir="-1" aria-label="Previous page">&larr;</button>
          <div class="book-caption" aria-live="polite">
            <span class="book-count"></span>
            <h3 class="book-title"></h3>
            <p class="book-line"></p>
          </div>
-         <button type="button" class="book-btn" data-dir="1" aria-label="Next page">&rarr;</button>
        </div>
       </div>
     </section>
@@ -523,6 +528,8 @@
 
       book.classList.add('is-book');
       bar.hidden = false;
+      prev.hidden = false;
+      next.hidden = false;
       book.tabIndex = 0;
 
       function show() {
