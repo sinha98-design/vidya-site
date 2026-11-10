@@ -301,8 +301,13 @@
       88% { transform: rotate(-6deg) scale(1.03); }
     }
     /* second part: the figure with my skills, centred */
-    .about-sheet .about-inner { grid-template-columns: 1fr; justify-items: center; }
-    .about-sheet .me { width: 430px; max-width: 100%; }
+    /* minmax(0, 1fr) lets the column shrink to any screen instead of
+       pushing content off the edge */
+    .about-sheet .about-inner { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+    .about-sheet .me { width: min(430px, 100%); }
+    /* fit any screen: nothing may be wider than the screen it's on */
+    html, body { max-width: 100%; overflow-x: clip; }
+    img, svg { max-width: 100%; }
     .running {
       font-family: var(--header);
       font-size: 22px;
@@ -496,7 +501,12 @@
     footer { padding-top: 32px; color: var(--muted); font-size: 15px; }
 
     @media (max-width: 760px) {
-      .about-inner { grid-template-columns: 1fr; gap: 24px; padding: 32px 16px 40px; }
+      .about-inner { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 32px 16px 40px; }
+      /* long skill names wrap instead of running off the screen */
+      .me .skills .label { white-space: normal; }
+      .me .skills li.open .label, .me .skills .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
+      .anim .me .skills .label { max-width: 0; }
+      .anim .me .skills li.open .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
       .me { --fig-w: 150px; width: 100%; max-width: 340px; margin: 0 auto; }
       .me .skills { font-size: 13px; }
       .me .skills li > svg { width: 28px; height: 28px; padding: 5px; }
