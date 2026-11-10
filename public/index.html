@@ -177,16 +177,19 @@
     }
     /* Scroll animation (JavaScript on, motion allowed): when the figure
        scrolls into view, the skills open slowly one by one, top to bottom:
-       icon pops in, name slides out, branch grows, polaroid lands. */
+       icon pops in, name types out, branch grows, polaroid lands. */
     .anim .me .skills li > svg { opacity: 0; transform: scale(0.4); transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.3, 1.5, 0.5, 1); }
-    .anim .me .skills .label { max-width: 0; opacity: 0; transition: max-width 0.6s ease 0.45s, opacity 0.5s ease 0.45s; }
-    .anim .me .skills .twig { width: 0; transition: width 0.6s ease 1s; }
-    .anim .me .skills .pola { opacity: 0; transform: scale(0.4) rotate(-8deg); transition: opacity 0.4s ease 1.55s, transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) 1.55s; }
+    /* the name is typed out letter by letter by JavaScript (see the script) */
+    .anim .me .skills .label { max-width: 280px; opacity: 1; }
+    .me .skills .label .caret { height: 1em; }
+    .anim .me .skills .twig { width: 0; transition: width 0.6s ease; }
+    .anim .me .skills .pola { opacity: 0; transform: scale(0.4) rotate(-8deg); transition: opacity 0.4s ease 0.55s, transform 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) 0.55s; }
     .anim .me .skills li.open > svg { opacity: 1; transform: none; }
     .anim .me .skills li.open .label { max-width: 280px; opacity: 1; }
-    .anim .me .skills li.open .twig { width: var(--len); }
-    .anim .me .skills li.open .pola { opacity: 1; transform: rotate(-3deg); }
-    .anim .me .skills li.open:nth-child(even) .pola { transform: rotate(3deg); }
+    /* branch and polaroid wait until the name has finished typing */
+    .anim .me .skills li.grown .twig { width: var(--len); }
+    .anim .me .skills li.grown .pola { opacity: 1; transform: rotate(-3deg); }
+    .anim .me .skills li.grown:nth-child(even) .pola { transform: rotate(3deg); }
     /* typed introduction */
     section.typed { padding-top: 16px; padding-bottom: 0; }
     .typed-inner {
@@ -505,7 +508,7 @@
       /* long skill names wrap instead of running off the screen */
       .me .skills .label { white-space: normal; }
       .me .skills li.open .label, .me .skills .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
-      .anim .me .skills .label { max-width: 0; }
+      .anim .me .skills .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
       .anim .me .skills li.open .label { max-width: calc(100vw - var(--fig-w) * var(--x) - 80px); }
       .me { --fig-w: 150px; width: 100%; max-width: 340px; margin: 0 auto; }
       .me .skills { font-size: 12px; }
@@ -848,21 +851,63 @@
   </script>
 
   <script>
-    // Skills along my figure: when it scrolls into view, open them slowly,
-    // one after another from head to boots.
+    // Skills along my figure: when it scrolls into view they open one after
+    // another, head to boots. Each one: the icon pops in, its name is typed
+    // out letter by letter like on a keyboard, then the branch grows and the
+    // polaroid lands. The next skill starts once the previous one is done.
     (function () {
       var items = Array.prototype.slice.call(document.querySelectorAll('.me .skills li'));
       if (!items.length) return;
       if (!document.documentElement.classList.contains('anim') || !('IntersectionObserver' in window)) {
-        items.forEach(function (li) { li.classList.add('open'); });
+        items.forEach(function (li) { li.classList.add('open', 'grown'); });
         return;
       }
+
+      // screen readers get each full name straight away; the typed copy is visual only
+      var labels = items.map(function (li) {
+        var label = li.querySelector('.label');
+        var full = label.textContent;
+        var sr = document.createElement('span');
+        sr.className = 'sr-only';
+        sr.textContent = full;
+        label.parentNode.insertBefore(sr, label);
+        label.setAttribute('aria-hidden', 'true');
+        label.textContent = '';
+        return { el: label, text: full };
+      });
+
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+
+      function typeInto(label, done) {
+        var i = 0;
+        (function step() {
+          label.el.textContent = label.text.slice(0, ++i);
+          label.el.appendChild(caret);
+          if (i < label.text.length) {
+            setTimeout(step, label.text.charAt(i - 1) === ' ' ? 90 : 55);
+          } else {
+            setTimeout(function () { caret.remove(); done(); }, 250);
+          }
+        })();
+      }
+
+      function openNext(n) {
+        if (n >= items.length) return;
+        var li = items[n];
+        li.classList.add('open');                      // icon pops in
+        setTimeout(function () {
+          typeInto(labels[n], function () {            // name types out
+            li.classList.add('grown');                 // branch + polaroid
+            setTimeout(function () { openNext(n + 1); }, 700);
+          });
+        }, 450);
+      }
+
       var seen = new IntersectionObserver(function (entries) {
         if (!entries[0].isIntersecting) return;
         seen.disconnect();
-        items.forEach(function (li, i) {
-          setTimeout(function () { li.classList.add('open'); }, 300 + i * 900);
-        });
+        setTimeout(function () { openNext(0); }, 300);
       }, { threshold: 0.35 });
       seen.observe(document.querySelector('.me'));
     })();
