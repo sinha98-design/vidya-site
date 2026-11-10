@@ -59,19 +59,19 @@
       margin: 0 auto;
       padding: 48px 24px 56px;
       display: grid;
-      grid-template-columns: minmax(220px, 300px) 1fr;
-      gap: 40px;
+      grid-template-columns: 430px 1fr;
+      gap: 32px;
       align-items: start;
     }
     .me {
       position: relative;
-      text-align: center;
+      --fig-w: 260px;
     }
     .me img {
       display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1 / 2;
+      width: var(--fig-w);
+      height: calc(var(--fig-w) * 2);
+      max-width: none;
       object-fit: cover;
       object-position: center;
       /* red "sticker" outline around the cut-out */
@@ -90,19 +90,70 @@
       color: var(--red);
       background: #fff;
       transform: rotate(-4deg);
-      margin-top: -12px;
+      margin: -12px 0 0 calc(var(--fig-w) / 2 - 64px);
       position: relative;
     }
+    /* skills placed along the outline of the figure, like fashion-sketch notes */
+    .me .skills {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(var(--fig-w) * 2);
+      margin: 0;
+      display: block;
+    }
+    .me .skills li {
+      position: absolute;
+      left: calc(var(--fig-w) * var(--x) + 14px);
+      top: calc(var(--fig-w) * 2 * var(--y));
+      transform: translateY(-50%);
+      max-width: calc(100% - var(--fig-w) * var(--x) - 8px);
+      line-height: 1.25;
+    }
+    /* typed introduction */
+    .typed-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 8px 24px 48px;
+    }
+    .typed p {
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      line-height: 1.55;
+      max-width: 46rem;
+      margin: 0 0 14px;
+    }
+    .typed strong { color: var(--red); font-weight: 700; }
+    .caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.05em;
+      margin-left: 2px;
+      vertical-align: -0.15em;
+      background: var(--red);
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px; padding: 0; border: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    /* name block sits in the middle, beside the figure */
+    .intro { align-self: center; }
     .running {
       font-family: var(--header);
-      font-size: 18px;
+      font-size: 22px;
       margin: 0 0 18px;
       color: var(--ink);
     }
     h1 {
       font-family: var(--display);
       font-weight: 800;
-      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-size: clamp(2.8rem, 6.4vw, 4.8rem);
       line-height: 1.02;
       letter-spacing: -0.03em;
       margin: 0 0 20px;
@@ -282,7 +333,9 @@
 
     @media (max-width: 760px) {
       .about-inner { grid-template-columns: 1fr; gap: 24px; padding: 32px 16px 40px; }
-      .me { max-width: 200px; margin: 0 auto; }
+      .me { --fig-w: 150px; width: 100%; max-width: 340px; margin: 0 auto; }
+      .me .skills { font-size: 13px; }
+      .me .skills svg { width: 17px; height: 17px; }
       .polaroids { justify-content: center; }
       .polaroid { width: 140px; }
       .polaroid .shot { width: 120px; height: 140px; }
@@ -418,23 +471,22 @@
     <div class="about-inner">
       <div class="me">
         <img src="images/vidya-illustration.png" width="1080" height="1080" alt="A hand-drawn illustration of Vidya: long black hair, sunglasses on her head, a red off-shoulder top, dark jeans and red ankle boots.">
+        <!-- each skill sits beside the part of the figure it belongs to,
+             following the outline from head to boots -->
+        <ul class="skills" aria-label="What I do">
+          <li style="--x: .61; --y: .11"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Observation</li>
+          <li style="--x: .72; --y: .24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg>Colour</li>
+          <li style="--x: .70; --y: .38"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg>Illustration</li>
+          <li style="--x: .68; --y: .52"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg>Fashion</li>
+          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg>Photography</li>
+          <li class="next" style="--x: .68; --y: .84"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg>Moving into product design &amp; UX</li>
+        </ul>
         <span class="tag">drawn by me</span>
       </div>
 
       <div class="intro">
         <p class="running">Vidya's PORTFOLIO</p>
         <h1 id="hello">Hi! I'm <span class="name">Vidya Sinha</span></h1>
-        <p>A hand-led <strong>Designer &amp; illustration</strong>, moving into product design. I'm a student studying <strong>PMUX</strong>.</p>
-        <p>I design by really looking: at light and at colour. I'm self-taught: I watched, I practised, I painted.</p>
-        <p>Now I'm learning to bring my meticulous look to product design.</p>
-        <ul class="skills" aria-label="What I do">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg>Colour</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>Observation</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg>Illustration</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg>Fashion</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg>Photography</li>
-          <li class="next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg>Moving into product design &amp; UX</li>
-        </ul>
 
         <div class="polaroids" aria-label="Snapshots from my sketchbook" hidden>
           <figure class="polaroid">
@@ -453,6 +505,15 @@
       </div>
     </div>
   </header>
+
+  <!-- My introduction, typed out when it scrolls into view -->
+  <section class="typed" aria-label="About me">
+    <div class="typed-inner">
+      <p>A hand-led <strong>Designer &amp; illustration</strong>, moving into product design. I'm a student studying <strong>PMUX</strong>.</p>
+      <p>I design by really looking: at light and at colour. I'm self-taught: I watched, I practised, I painted.</p>
+      <p>Now I'm learning to bring my meticulous look to product design.</p>
+    </div>
+  </section>
 
   <div class="strip" aria-hidden="true" hidden>
     <div class="strip-track">
@@ -571,6 +632,59 @@
       });
 
       show();
+    })();
+  </script>
+
+  <script>
+    // Type my introduction out, letter by letter, once it scrolls into view.
+    // Screen readers get the full text straight away; without JavaScript, or
+    // with reduced motion turned on, the text simply shows.
+    (function () {
+      var box = document.querySelector('.typed-inner');
+      if (!box || !('IntersectionObserver' in window)) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var copy = document.createElement('div');
+      copy.className = 'sr-only';
+      copy.innerHTML = box.innerHTML;
+      box.parentNode.insertBefore(copy, box);
+      box.setAttribute('aria-hidden', 'true');
+
+      var paras = Array.prototype.slice.call(box.querySelectorAll('p'));
+      var jobs = [];
+      paras.forEach(function (p) {
+        p.style.minHeight = p.offsetHeight + 'px';
+        var walker = document.createTreeWalker(p, NodeFilter.SHOW_TEXT);
+        var n;
+        while ((n = walker.nextNode())) {
+          jobs.push({ node: n, text: n.nodeValue });
+        }
+      });
+      jobs.forEach(function (j) { j.node.nodeValue = ''; });
+
+      var caret = document.createElement('span');
+      caret.className = 'caret';
+
+      function type() {
+        var j = 0, i = 0;
+        (function step() {
+          if (j >= jobs.length) {
+            setTimeout(function () { caret.remove(); }, 2500);
+            return;
+          }
+          var job = jobs[j];
+          job.node.nodeValue = job.text.slice(0, ++i);
+          job.node.parentNode.insertBefore(caret, job.node.nextSibling);
+          if (i >= job.text.length) { j++; i = 0; }
+          var ch = job.text.charAt(i - 1);
+          setTimeout(step, /[.,:]/.test(ch) ? 260 : 28);
+        })();
+      }
+
+      var seen = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { seen.disconnect(); type(); }
+      }, { threshold: 0.3 });
+      seen.observe(box);
     })();
   </script>
 </body>
