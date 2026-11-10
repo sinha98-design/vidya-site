@@ -7,7 +7,7 @@
   <meta name="description" content="Vidya Sinha is a hand-led Designer &amp; illustration, moving into product design and UX. Colour, close observation and work made by hand, not by AI.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..800&family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..800,100,1&display=swap" rel="stylesheet">
   <style>
     /* Theme taken from my illustration and portfolio:
        colours  - top and boots (deep red), jeans (denim charcoal), skin (blush),
@@ -30,10 +30,13 @@
       /* old names kept so nothing breaks */
       --plum: var(--denim);
       --pink: var(--rose);
-      --hand: "DM Serif Display", Georgia, serif;
-      --display: "Syne", system-ui, sans-serif;
-      --header: "Anton", Impact, sans-serif;
-      --serif: "DM Serif Display", Georgia, serif;
+      /* two fonts only: a fancy one for my name, a simple one for everything else */
+      --name-font: "Fraunces", Georgia, serif;
+      --text: "DM Sans", system-ui, sans-serif;
+      --hand: var(--text);
+      --display: var(--text);
+      --header: var(--text);
+      --serif: var(--text);
     }
     * { box-sizing: border-box; }
     /* anything marked hidden stays hidden, whatever its other styles say */
@@ -142,8 +145,74 @@
       clip: rect(0 0 0 0);
       white-space: nowrap;
     }
-    /* name block sits in the middle, beside the figure */
-    .intro { align-self: center; }
+    /* my hand-lettered "Portfolio", set like a stamp after "Vidya's" */
+    .running { display: flex; align-items: center; gap: 10px; }
+    .stamp {
+      display: inline-block;
+      width: 110px;
+      height: 63px;
+      background: url(images/portfolio-lettering.png) no-repeat;
+      background-size: 113.7% auto;
+      background-position: 61.5% 70%;
+      transform: rotate(-6deg);
+      filter: drop-shadow(2px 3px 0 rgba(75, 15, 122, 0.18));
+    }
+    /* first screen: just my name, in the middle of the screen */
+    .welcome {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px 24px;
+      position: relative;
+    }
+    .welcome .running { justify-content: center; flex-wrap: wrap; row-gap: 4px; margin: 64px 0 0; }
+    .welcome .enter { color: var(--ink); text-decoration: none; }
+    .enter-arrow {
+      flex-basis: 100%;
+      margin-top: 18px;
+      font-family: var(--header);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 15px;
+      color: var(--red);
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes bob { 50% { transform: translateY(6px); } }
+    @media (prefers-reduced-motion: reduce) { .enter-arrow { animation: none; } }
+    .welcome h1 { margin: 0; }
+
+    /* Scroll animation (only when JavaScript is on):
+       1. first scroll: "Vidya's" slides down into place,
+       2. then the Portfolio stamp drops in like it's being stamped,
+       3. scroll further and the stamp keeps a gentle pulse. */
+    .anim .welcome .owner,
+    .anim .welcome .stamp { opacity: 0; }
+    .anim .welcome .owner { transform: translateY(-40px); }
+    .anim .welcome .stamp { transform: translateY(-60px) rotate(-6deg) scale(1.5); }
+    .anim .welcome.entered .owner {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.6s ease-out, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .anim .welcome.entered .stamp {
+      opacity: 1;
+      transform: rotate(-6deg) scale(1);
+      transition: opacity 0.4s ease-out 0.45s, transform 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) 0.45s;
+    }
+    .anim .welcome.pulsing .stamp {
+      animation: stamp-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes stamp-pulse {
+      0%, 100% { transform: rotate(-6deg) scale(1); }
+      50% { transform: rotate(-6deg) scale(1.12); }
+    }
+    /* second part: the figure with my skills, centred */
+    .about-sheet .about-inner { grid-template-columns: 1fr; justify-items: center; }
+    .about-sheet .me { width: 430px; max-width: 100%; }
     .running {
       font-family: var(--header);
       font-size: 22px;
@@ -151,13 +220,18 @@
       color: var(--ink);
     }
     h1 {
-      font-family: var(--display);
-      font-weight: 800;
+      font-family: var(--name-font);
+      font-weight: 700;
+      font-variation-settings: "SOFT" 100, "WONK" 1;
       font-size: clamp(2.8rem, 6.4vw, 4.8rem);
-      line-height: 1.02;
-      letter-spacing: -0.03em;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
       margin: 0 0 20px;
     }
+    /* the simple font needs a little more weight where the old bold fonts were */
+    .owner, .tag, .enter-arrow, .book-count, .notes h2, .skills { font-weight: 700; }
+    .section-title { font-weight: 700 !important; letter-spacing: 0.01em; }
+    .polaroid figcaption { font-style: normal; }
     h1 .name { color: var(--red); display: block; }
     .intro p { margin: 0 0 14px; max-width: 40rem; }
     .intro strong { color: var(--red); font-weight: 700; }
@@ -467,7 +541,18 @@
   </style>
 </head>
 <body>
-  <header class="about-sheet" aria-labelledby="hello">
+  <!-- First screen: only my name -->
+  <header class="welcome" aria-labelledby="hello">
+    <h1 id="hello">Hi! I'm <span class="name">Vidya Sinha</span></h1>
+    <!-- one element: the invitation, the Portfolio stamp and the way down -->
+    <a class="running enter" href="#me">
+      <span class="owner">You are here to see Vidya's</span>
+      <span class="stamp" role="img" aria-label="Portfolio"></span>
+      <span class="enter-arrow">Scroll &darr;</span>
+    </a>
+  </header>
+
+  <section class="about-sheet" id="me" aria-label="Me and what I do">
     <div class="about-inner">
       <div class="me">
         <img src="images/vidya-illustration.png" width="1080" height="1080" alt="A hand-drawn illustration of Vidya: long black hair, sunglasses on her head, a red off-shoulder top, dark jeans and red ankle boots.">
@@ -484,10 +569,7 @@
         <span class="tag">drawn by me</span>
       </div>
 
-      <div class="intro">
-        <p class="running">Vidya's PORTFOLIO</p>
-        <h1 id="hello">Hi! I'm <span class="name">Vidya Sinha</span></h1>
-
+      <div class="intro" hidden>
         <div class="polaroids" aria-label="Snapshots from my sketchbook" hidden>
           <figure class="polaroid">
             <span class="shot" role="img" aria-label="Mid - Dissolve: a coloured-pencil drawing of swirling blues and greens, like moving water." style="background-image: url(images/work/victory.jpg); background-size: 206% auto; background-position: 50% 73%;"></span>
@@ -504,7 +586,7 @@
         </div>
       </div>
     </div>
-  </header>
+  </section>
 
   <!-- My introduction, typed out when it scrolls into view -->
   <section class="typed" aria-label="About me">
@@ -632,6 +714,28 @@
       });
 
       show();
+    })();
+  </script>
+
+  <script>
+    // First screen: "Vidya's Portfolio" slides in on the first scroll,
+    // then the Portfolio stamp pulses as you keep scrolling.
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var welcome = document.querySelector('.welcome');
+      if (!welcome) return;
+      document.documentElement.classList.add('anim');
+      // the invitation slides in shortly after the page opens,
+      // and the Portfolio stamp starts pulsing once you scroll
+      setTimeout(function () { welcome.classList.add('entered'); }, 500);
+      function check() {
+        var y = window.scrollY || window.pageYOffset;
+        if (y > 5) welcome.classList.add('entered');
+        if (y > 30) welcome.classList.add('pulsing');
+        if (welcome.classList.contains('pulsing')) window.removeEventListener('scroll', check);
+      }
+      window.addEventListener('scroll', check, { passive: true });
+      check();
     })();
   </script>
 
