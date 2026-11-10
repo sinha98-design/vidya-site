@@ -49,11 +49,7 @@
 
     /* ---------- About me: grid-paper sheet, cut-out me, notes, polaroids ---------- */
     .about-sheet {
-      background-color: var(--paper);
-      background-image:
-        linear-gradient(var(--grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-      background-size: 24px 24px;
+      background: #ffffff;
       overflow: hidden;
     }
     .about-inner {
@@ -293,14 +289,16 @@
     }
 
     /* ---------- Album: turn the portfolio pages like a book ---------- */
+    /* side gutters hold the arrows, so they never cover the page */
     .book.is-book .book-stage {
       position: relative;
-      max-width: 920px;
+      max-width: 1056px;
       margin: 0 auto;
+      padding: 0 68px;
       perspective: 2400px;
     }
     /* the pages underneath, peeking out on the right like a real album */
-    .book.is-book .book-stage::before {
+    .book.is-book .work::before {
       content: "";
       position: absolute;
       inset: 6px -10px -6px 4px;
@@ -382,8 +380,8 @@
     }
     .book-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
     .book-btn:disabled { opacity: 0; pointer-events: none; }
-    .book-prev { left: -22px; }
-    .book-next { right: -22px; }
+    .book-prev { left: 4px; }
+    .book-next { right: 4px; }
     .book-caption { text-align: center; }
     .book-count {
       font-family: var(--header);
@@ -403,10 +401,13 @@
       .book.is-book .work figure { transition: none; }
     }
     @media (max-width: 760px) {
-      .book.is-book .book-stage::before { inset: 4px -6px -4px 2px; }
-      .book-btn { width: 40px; height: 40px; font-size: 17px; }
-      .book-prev { left: 6px; }
-      .book-next { right: 6px; }
+      /* on a phone the arrows move below the page, either side of the caption */
+      .book.is-book .book-stage { padding: 0 6px 0 0; }
+      .book.is-book .work::before { inset: 4px -6px -4px 2px; }
+      .book-btn { width: 44px; height: 44px; font-size: 18px; top: auto; bottom: -66px; transform: none; }
+      .book-prev { left: 0; }
+      .book-next { right: 0; }
+      .book-bar { margin-top: 20px; padding: 0 52px; min-height: 52px; }
     }
   </style>
 </head>
@@ -451,7 +452,7 @@
     </div>
   </header>
 
-  <div class="strip" aria-hidden="true">
+  <div class="strip" aria-hidden="true" hidden>
     <div class="strip-track">
       <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
       <span>Illustration</span><span class="dot">✦</span><span>Colour</span><span class="dot">✦</span><span>Fashion</span><span class="dot">✦</span><span>Photography</span><span class="dot">✦</span><span>Product design</span><span class="dot">✦</span>
@@ -501,14 +502,6 @@
       </div>
     </section>
 
-    <section aria-labelledby="values">
-      <h2 class="section-title" id="values">What I value</h2>
-      <blockquote>Design made with care</blockquote>
-    </section>
-
-    <footer>
-      <p>The code for this site is on <a href="https://github.com/sinha98-design/vidya-site">GitHub</a>.</p>
-    </footer>
   </main>
 
   <script>
