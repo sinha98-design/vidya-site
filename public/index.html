@@ -181,6 +181,9 @@
     /* a polaroid you can click to see my work, whole */
     .me .skills .pola-open { pointer-events: auto; color: inherit; text-decoration: none; display: block; cursor: zoom-in; border-radius: 2px; }
     .me .skills .pola-open .shot { position: relative; }
+    /* a polaroid with my photo on it, whole: the frame takes the photo's shape */
+    .me .skills .pola .shot.photo { height: auto; aspect-ratio: 3 / 4; background-size: cover; background-position: center; }
+    .me .skills .pola-open .shot.photo::after { content: none; }
     .me .skills .pola-open .shot::after {
       content: "View"; position: absolute; inset: auto 0 6px; text-align: center;
       font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: .04em;
@@ -722,7 +725,7 @@
           <li style="--x: .72; --y: .24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg><span class="label">Colour</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Mid - Dissolve</figcaption></figure></span></li>
           <li style="--x: .70; --y: .38"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg><span class="label">Illustration</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Garba chaniya choli</figcaption></figure></span></li>
           <li style="--x: .68; --y: .52"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg><span class="label">Fashion</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Colour Blocking</figcaption></figure></span></li>
-          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><a class="pola-open" href="images/photos/photo-01.jpg" data-album="photography" data-caption="My photography" aria-label="Open my photography album"><figure class="pola"><span class="shot"></span><figcaption>Nature painted first</figcaption></figure></a></span></li>
+          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><a class="pola-open" href="images/photos/photo-01.jpg" data-album="photography" data-caption="My photography" aria-label="Open my photography album"><figure class="pola"><span class="shot photo" style="background-image: url(images/photos/polaroid-flower.jpg)"></span><figcaption>Nature painted first</figcaption></figure></a></span></li>
           <li class="next" style="--x: .68; --y: .84"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg><span class="label">Moving into product design &amp; UX</span></li>
         </ul>
       </div>
@@ -1047,7 +1050,6 @@
           ['images/photos/photo-06.jpg', 'The sea at dusk, the wet shore reflecting a pale sky'],
           ['images/photos/photo-07.jpg', 'A deep pink hibiscus with its yellow centre, in Coorg'],
           ['images/photos/photo-08.jpg', 'A branch of pink bougainvillea with white flowers'],
-          ['images/photos/photo-09.jpg', 'A cluster of small crimson flowers, close up'],
           ['images/photos/photo-10.jpg', 'Sunset on a hill station, seen through dry wildflower stems']
         ]
       };
