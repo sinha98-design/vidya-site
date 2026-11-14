@@ -175,6 +175,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    /* no names under the polaroids: just the white frame, with a polaroid's wider bottom */
+    .me .skills .pola figcaption { display: none; }
+    .me .skills .pola { padding-bottom: 14px; }
     /* a polaroid you can click to see my work, whole */
     .me .skills .pola-open { pointer-events: auto; color: inherit; text-decoration: none; display: block; cursor: zoom-in; border-radius: 2px; }
     .me .skills .pola-open .shot { position: relative; }
