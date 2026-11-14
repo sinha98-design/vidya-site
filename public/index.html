@@ -188,7 +188,7 @@
     .me .skills .pola-open:hover .pola, .me .skills .pola-open:focus-visible .pola { box-shadow: 0 10px 22px rgba(28, 20, 24, 0.28); }
     .me .skills .pola-open:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
     .viewer { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 94vh; overflow: visible; }
-    .viewer::backdrop { background: rgba(20, 16, 20, 0.82); }
+    .viewer::backdrop { background: rgba(20, 16, 20, 0.93); }
     .viewer img { display: block; max-width: 94vw; max-height: 84vh; width: auto; height: auto; object-fit: contain; background: #fff; box-shadow: 0 18px 50px rgba(0,0,0,.4); }
     .viewer p { margin: 10px 0 0; color: #fff; font-weight: 700; text-align: center; }
     .viewer-close {
@@ -196,9 +196,23 @@
       border: 0; background: #fff; color: var(--red); font-size: 22px; line-height: 1; cursor: pointer;
       box-shadow: 0 4px 12px rgba(0,0,0,.3);
     }
+    /* album arrows, either side of the photo */
+    .viewer-nav {
+      position: fixed; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%;
+      border: 0; background: #fff; color: var(--red); font-size: 28px; line-height: 1; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,.3); padding: 0 0 4px;
+    }
+    .viewer-prev { left: 14px; }
+    .viewer-next { right: 14px; }
+    .viewer-nav:focus-visible, .viewer-close:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+    @media (min-width: 761px) { .viewer:has(.viewer-nav:not([hidden])) img { max-width: calc(94vw - 140px); } }
     @media (max-width: 760px) {
       .me .skills .pola-open .shot::after { font-size: 8px; bottom: 3px; }
       .viewer-close { top: -48px; right: 0; }
+      .viewer img { max-height: 70vh; }
+      .viewer-nav { top: auto; bottom: 18px; transform: none; }
+      .viewer-prev { left: calc(50% - 70px); }
+      .viewer-next { right: calc(50% - 70px); }
     }
     /* Scroll animation (JavaScript on, motion allowed): when the figure
        scrolls into view, the skills open slowly one by one, top to bottom:
@@ -708,7 +722,7 @@
           <li style="--x: .72; --y: .24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.8-.4-1.1-.3-.3-.4-.6-.4-1 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.3-4-7.7-9-7.7Z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.3" r="1.2"/><circle cx="15" cy="7.8" r="1.2"/></svg><span class="label">Colour</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Mid - Dissolve</figcaption></figure></span></li>
           <li style="--x: .70; --y: .38"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20Z"/><path d="M13.5 7l3 3"/></svg><span class="label">Illustration</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Garba chaniya choli</figcaption></figure></span></li>
           <li style="--x: .68; --y: .52"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5a1.8 1.8 0 1 1 1.8-1.8c0 1-.8 1.4-1.8 2.2L3.5 14a1.2 1.2 0 0 0 .7 2.2h15.6a1.2 1.2 0 0 0 .7-2.2L12 7.9"/></svg><span class="label">Fashion</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Colour Blocking</figcaption></figure></span></li>
-          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><figure class="pola"><span class="shot"></span><figcaption>Nature painted first</figcaption></figure></span></li>
+          <li style="--x: .67; --y: .66"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.7l1.6-2.2h6.4L16.8 7h2.7A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5v-9Z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="label">Photography</span><span class="branch"><span class="twig"></span><a class="pola-open" href="images/photos/photo-01.jpg" data-album="photography" data-caption="My photography" aria-label="Open my photography album"><figure class="pola"><span class="shot"></span><figcaption>Nature painted first</figcaption></figure></a></span></li>
           <li class="next" style="--x: .68; --y: .84"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-2 6L5 3Z"/></svg><span class="label">Moving into product design &amp; UX</span></li>
         </ul>
       </div>
@@ -1012,23 +1026,66 @@
   </script>
   <dialog class="viewer" aria-label="My work">
     <button class="viewer-close" type="button" aria-label="Close">×</button>
+    <button class="viewer-nav viewer-prev" type="button" aria-label="Previous photo" hidden>‹</button>
     <img alt="">
-    <p></p>
+    <button class="viewer-nav viewer-next" type="button" aria-label="Next photo" hidden>›</button>
+    <p aria-live="polite"></p>
   </dialog>
   <script>
-    // click a polaroid: my work opens whole, on top of the page
+    // click a polaroid: my work opens whole, on top of the page.
+    // a polaroid with an album opens a set of photos you can flip through.
     (function () {
       var box = document.querySelector('.viewer');
       if (!box || !box.showModal) return; // older browsers just open the picture
+      var albums = {
+        photography: [
+          ['images/photos/photo-01.jpg', 'A tree in pink blossom against a blue sky, change of seasons in Bangalore'],
+          ['images/photos/photo-02.jpg', 'Bright pink bougainvillea with small white flowers'],
+          ['images/photos/photo-03.jpg', 'Pink bougainvillea close up, with soft lights behind'],
+          ['images/photos/photo-04.jpg', 'A pink flowering vine among green leaves and orange buds'],
+          ['images/photos/photo-05.jpg', 'Pink and white vine flowers, close up'],
+          ['images/photos/photo-06.jpg', 'The sea at dusk, the wet shore reflecting a pale sky'],
+          ['images/photos/photo-07.jpg', 'A deep pink hibiscus with its yellow centre, in Coorg'],
+          ['images/photos/photo-08.jpg', 'A branch of pink bougainvillea with white flowers'],
+          ['images/photos/photo-09.jpg', 'A cluster of small crimson flowers, close up'],
+          ['images/photos/photo-10.jpg', 'Sunset on a hill station, seen through dry wildflower stems']
+        ]
+      };
       var img = box.querySelector('img'), cap = box.querySelector('p');
+      var prev = box.querySelector('.viewer-prev'), next = box.querySelector('.viewer-next');
+      var set = null, at = 0, title = '';
+      function show(i) {
+        at = (i + set.length) % set.length;
+        img.src = set[at][0];
+        img.alt = set[at][1];
+        cap.textContent = title + ' · ' + (at + 1) + ' / ' + set.length;
+        new Image().src = set[(at + 1) % set.length][0]; // have the next photo ready
+      }
       document.querySelectorAll('.pola-open').forEach(function (a) {
         a.addEventListener('click', function (e) {
           e.preventDefault();
-          img.src = a.getAttribute('href');
-          img.alt = a.dataset.caption;
-          cap.textContent = a.dataset.caption;
+          title = a.dataset.caption;
+          set = albums[a.dataset.album] || null;
+          prev.hidden = next.hidden = !set;
+          if (set) show(0);
+          else { img.src = a.getAttribute('href'); img.alt = title; cap.textContent = title; }
           box.showModal();
         });
+      });
+      prev.addEventListener('click', function () { show(at - 1); });
+      next.addEventListener('click', function () { show(at + 1); });
+      box.addEventListener('keydown', function (e) {
+        if (!set) return;
+        if (e.key === 'ArrowLeft') show(at - 1);
+        if (e.key === 'ArrowRight') show(at + 1);
+      });
+      // swipe on a phone
+      var x0 = null;
+      box.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      box.addEventListener('touchend', function (e) {
+        if (!set || x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) show(at + (dx < 0 ? 1 : -1));
       });
       box.querySelector('.viewer-close').addEventListener('click', function () { box.close(); });
       box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
